@@ -1,0 +1,36 @@
+#!/bin/bash
+clear 
+MojaLiczbaParametrow=$#
+PrawidlowaLiczbaParametrow=2
+if [ $MojaLiczbaParametrow -ge $PrawidlowaLiczbaParametrow ]
+then echo "Prawidlowo podano postać wywołania skryptu,czyli skrypt plik katalog1 katalog2... lub skrypt plik katalog1"
+else 
+echo "Żle wpisano liczbe parametrow skryptu. Prawidlowa postać wywołania skryptu to skrypt plik katalog1 katalog2... lub tylko z jednym katalogiem, albo dwoma"
+fi
+# poniszsza instrukcja warunkowa sprawdza czy mamy uprawnienia do czytania pliku. Jeśli tak to sprawdza czy istnieje plik podany w pierwszym parametrze. Jeśli tak to wypisuje jego i-węzeł. Jeśli nie, to wyświetla odpowiedni komunikat.
+if [ -r ./$1 ];then
+    if [ -e ./$1 ]; 
+    then echo "Nr i-węzła pliku $1 to `ls -i $1`"
+    else echo "Plik podany w pierwszym parametrze nie istnieje"
+    fi
+else echo "Nie masz uprawnien do czytania z pliku podanego w pierwszym parametrze"
+fi
+echo "pokazano iwezel pliku"
+stringplik=$1
+#echo $stringplik #do testow
+let i=2;
+# ponizsza petla for pokolei czyta argumenty wywolania od drugiego poczawszy
+for ((;i<MojaLiczbaParametrow+1;i++))
+    do 
+    stringkatalog=$2
+        echo "Teraz pokaze dowiazania z parametru nr $i" 
+        if [ -r ./$stringplik ]; then find ./$stringkatalog -samefile $stringplik 
+        else echo "nie mozesz czytac z katalogu podanego w tym parametrze"
+        fi
+        echo "pokazano dowiazania z parametru nr $i"
+    # shift przesunie mi wszystkie parametry wywolania skryptu w lewo, czyli usunie pierwszy w ktorym jest plik, dlatego najpierw zapisalem nazwe pliku do zmiennej 
+shift
+done
+echo koniec pracy programu
+
+
