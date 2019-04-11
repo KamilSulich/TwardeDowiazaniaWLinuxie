@@ -1,0 +1,32 @@
+#!/bin/bash
+clear 
+MojaLiczbaParametrow=$#
+PrawidlowaLiczbaParametrow=3
+if [ $MojaLiczbaParametrow -eq $PrawidlowaLiczbaParametrow ]
+then echo "Prawidlowo podano postać wywołania skryptu,czyli skrypt plik katalog1 katalog2"
+else 
+echo "Żle wpisano liczbe parametrow skryptu. Prawidlowa postać wywołania skryptu to skrypt plik katalog1 katalog2"
+fi
+# poniszsza instrukcja warunkowa sprawdza czy mamy uprawnienia do czytania pliku.Jeśli tak to sprawdza czy istnieje plik podany w pierwszym parametrze. Jeśli tak to wypisuje jego i-węzeł. Jeśli nie, to wyświetla odpowiedni komunikat.
+if [ -e $1 ];then
+    if [ -r $1 ]; then echo "Nr i-węzła pliku $1 to `ls -i $1`"
+    else echo "Nie masz uprawnien do czytania z pliku podanego w pierwszym parametrze"
+    fi
+else echo "Plik podany w pierwszym parametrze nie istnieje" 
+fi
+
+echo pokazano iwezel pliku, teraz pokaze dowiazania z parametru nr 2
+
+if [ -r $2 ]; then find ./$2 -samefile $1 
+else echo "nie mozesz czytac z katalogu podanego w drugim parametrze"
+fi
+
+echo pokazano dowiazania z parametru nr 2, teraz pokaze dowiazania z parametru nr 3
+
+if [ -r $2 ]; then find ./$3 -samefile $1
+else echo "nie mozesz czytac z katalogu podanego w trzecim parametrze"
+fi
+
+echo koniec pracy programu
+
+
